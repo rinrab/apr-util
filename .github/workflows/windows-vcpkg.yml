@@ -1,0 +1,35 @@
+name: Vcpkg (Windows)
+
+on:
+  push:
+    branches: [ "trunk" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest]
+        triplet:
+          - x64-windows
+        port:
+          - apr-util
+      fail-fast: false
+
+    name: "${{ matrix.port }}:${{ matrix.triplet }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+
+    env:
+      VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
+
+    steps:
+    - name: Export GitHub Actions cache environment variables
+      uses: actions/github-script@v7
+      with:
+        script: |
+          core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+          core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+
+    - uses: actions/checkout@v4
+
+    - name: vcpkg install
+      run: C:\vcpkg\vcpkg.exe install ${{ matrix.port }} --head --overlay-ports ${{ github.workspace }}\build\vcpkg --triplet ${{ matrix.triplet }} --enforce-port-checks
