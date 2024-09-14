@@ -2,7 +2,7 @@ name: Vcpkg (Windows)
 
 on:
   push:
-    branches: [ "trunk" ]
+    branches: ["1.7.x"]
 
 jobs:
   build:
