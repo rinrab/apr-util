@@ -1,6 +1,6 @@
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
-    REPO apache/apr-util
+    REPO rinrab/apr-util
     REF c7f6abcfa3345183aa4eb422e21f3e999f21a40f
     SHA512 0
     HEAD_REF 1.7.x
